@@ -1,0 +1,6 @@
+[submodule "glsp-theia-integration"]
+	path = glsp-theia-integration
+	url = https://github.com/eclipse-glsp/glsp-theia-integration
+[submodule "glsp-eclipse-integration"]
+	path = glsp-eclipse-integration
+	url = https://github.com/eclipse-glsp/glsp-eclipse-integration
