@@ -1,5 +1,6 @@
 import { Page } from '@playwright/test';
 import vscode_setup from './vscode_setup'; // Import setup function for Visual Studio Code
+import theia_setup from './theia_setup';
 // import eclipse_setup from './eclipse_setup'; // Import setup function for Eclipse
 // import theia_setup from './theia_setup'; // Import setup function for Theia
 
@@ -14,7 +15,7 @@ export async function setup_ide(ide: string, page: Page) {
         await eclipse_setup(page); // Setup for Eclipse
     } else {
         // If the IDE name is not recognized or blank, set up all IDEs
-        vscode_setup(page); // Setup for Visual Studio Code
+        await vscode_setup(page); // Setup for Visual Studio Code
         // theia_setup(page); // Setup for Theia
         // eclipse_setup(page); // Setup for Eclipse
     }
