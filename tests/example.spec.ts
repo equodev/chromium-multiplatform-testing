@@ -3,7 +3,9 @@ import { setup_ide } from './ide_setup';
 
 test('Test example', async ({ page }) => {
   // IDE Setup
-  const ide = 'theia'
+  const ide = process.env.IDE?.toLowerCase() ?? 'vscode'
+  console.log(ide);
+
   await setup_ide(ide, page)
 
 // TODO?
