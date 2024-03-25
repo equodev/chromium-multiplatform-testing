@@ -9,7 +9,7 @@ import { test, expect } from '@playwright/test';
 // 
 // 
 
-
+const ruta = 'ROUTE TO THIS PROJECT'
 
 test('Visual Studio Code', async () => { 
   const browser = await chromium.launch();
@@ -20,7 +20,7 @@ test('Visual Studio Code', async () => {
 
   // Navigate to the specified URL
   await page.goto('http://127.0.0.1:8000?tkn=d9b98637-0da9-4be3-8045-9940be90fe5f');
-  await page.goto('http://127.0.0.1:8000/?folder=/home/fran/Desktop/glsp/glsp-vscode-integration');
+  await page.goto(`http://127.0.0.1:8000/?folder=${ruta}/glsp-vscode-integration`);
   await page.getByRole('button', { name: 'Yes, I trust the authors' }).click();
   await page.getByRole('tab', { name: 'Extensions (Ctrl+Shift+X)' }).locator('a').click();
   await page.waitForTimeout(3000)
