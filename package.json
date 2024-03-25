@@ -9,5 +9,7 @@
     "@playwright/test": "^1.42.1",
     "@types/node": "^20.11.30"
   },
-  "scripts": {}
+  "scripts": {
+    "test": "playwright test --browser=chromium"
+  }
 }
