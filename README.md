@@ -6,26 +6,37 @@ First install the project dependencies by running the following command:
 yarn install
 ```
 
-Initialiing 
+## Initializing GLSP submodules
 
-Initialize Git Submodule
-Git Submodule contains all the dependencies required to run the GLSP project in each IDE.
+Submodules are required to run GLSP on the different IDEs
 
+```sh
 git submodule update --init
+```
 
-Note:
-The following lines will exaplain how to easily setup the submodules to run our test examples. If you required more information about the projects and their integratio you can check their readme.
+##  Disclaimer:
+The following lines will explain how to easily setup the submodules to run our test examples. At least one of them is required to run the project. The other two will be optional. If you required more information about the projects and their integration you can check their correspondent readme.
 
-VSCode GLSP Integration setup
+## VSCode GLSP Integration setup
 
 With VSCode installed on your machine open a terminal and the following line
 
+```sh
 code serve-web
+```
 
-Your terminal will output a localhost link with a token you have to access to download the VSCode server to run it on your browser.
+This command will start a local web server that serves the web interface of your VS Code. This allows you to access VS Code through a web browser instead of the desktop application allowing the tests to interact directly with it.
 
-Then proceed to install the Workflow GLSP Example extension
+During the VSCode test runs it will install the required GLSP extension to render the graphics.
+
+Here's the extension thats being installed during the tests
+
+```sh
 https://marketplace.visualstudio.com/items?itemName=Eclipse-GLSP.workflow-web-extension-demo
+```
+
+
+
 
 Import the glsp-vscode-integration folder
 
