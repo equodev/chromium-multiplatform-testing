@@ -1,17 +1,13 @@
 import { test, expect } from '@playwright/test';
-import { setup_ide } from './ide_setup.ts';
-
-const ide = "vscode"
+import { setup_ide } from './ide_setup';
 
 test('Test example', async ({ page }) => {
+  const ide = 'vscode'
+  test.setTimeout(800000000)
+  await setup_ide(ide, page)
   // IDE Setup
-  await setup_ide(ide, page);
 
-  await page.waitForTimeout(2000);
-  await page.frameLocator('iframe[name="ad32f55e-8fd7-4463-acde-97d13190a954"]').frameLocator('iframe[title="undefined"]').locator('#workflow-diagram_0')
-  // await page.waitForTimeout(40000);
-
-  // TODO?
+// TODO?
   // const frames = await page.frames()
   // console.log(frames)
   // await frames[0].frameLocator('iframe[title="undefined"]').locator('#workflow-diagram_0').getByText('Push').click();

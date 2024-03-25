@@ -8,16 +8,10 @@ async function vscode_setup(page: Page) {
 
     try {
         const result = exec('"sh" /snap/code/155/usr/share/code/bin/code --no-sandbox serve-web');
-        setTimeout(() => {
-            console.log("Delayed for 1 second.");
-        }, 4000);
-        
-        result?.stdout?.on('data', async (data) => {
+        result?.stdout?.on('data', async (data) => {  
             const url = data?.split('Web UI available at ')[1]
             if (url) {
-                test.setTimeout(90000)
-                // Navigate to the specified URL
-                await page.goto('http://127.0.0.1:8000?tkn=3cd9d4be-ce75-4c0a-8583-c87fc82ec939');
+                await page.goto(url);
                 await page.goto(`http://127.0.0.1:8000/?folder=${path}glsp-vscode-integration`);
 
                 await page.waitForSelector('text="Yes, I trust the authors"');
@@ -44,14 +38,14 @@ async function vscode_setup(page: Page) {
                 await page.click('div[aria-label="example"]');
                 await page.click('div[aria-label="workspace"]');
                 await page.click('div[aria-label="example1.wf"]');
-            }
+          }
         });
         result?.stderr?.on('data', (data) => {
         });
         await page.waitForTimeout(80000000)
-        } catch (error) {
+      } catch (error) {
         console.error('Error running command:', error);
-        }
-}
+      }
+                }
 
 export default vscode_setup;
