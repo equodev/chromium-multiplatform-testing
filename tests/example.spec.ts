@@ -2,10 +2,9 @@ import { test, expect } from '@playwright/test';
 import { setup_ide } from './ide_setup';
 
 test('Test example', async ({ page }) => {
-  const ide = 'vscode'
-  test.setTimeout(800000000)
-  await setup_ide(ide, page)
   // IDE Setup
+  const ide = 'theia'
+  await setup_ide(ide, page)
 
 // TODO?
   // const frames = await page.frames()
