@@ -6,96 +6,107 @@ First install the project dependencies by running the following command:
 yarn install
 ```
 
-## Initializing GLSP submodules
+## Initializing GLSP Submodules
 
-Submodules are required to run GLSP on the different IDEs
+Submodules are required to run GLSP on the different IDEs. Each of them are the correspondent integrations for the IDEs where the tests take place.  
 
 ```sh
 git submodule update --init
 ```
 
 ##  Disclaimer:
-The following lines will explain how to easily setup the submodules to run our test examples. At least one of them is required to run the project. The other two will be optional. If you required more information about the projects and their integration you can check their correspondent readme.
+The following lines will explain how to easily setup the submodules required to run our test examples. At least one of them is required to run the project. The other two will be optional. If you required more information about the GLSP projects and their integration you can check their correspondent readme inside the official GLSP Github. We simplified the setup providing a straightforward way to setup each one.
 
-## VSCode GLSP Integration setup
+> https://github.com/eclipse-glsp/glsp
 
-With VSCode installed on your machine open a terminal and the following line
+## VSCode GLSP Integration Setup
+
+With VSCode installed on your machine open a terminal and input the following line:
 
 ```sh
 code serve-web
 ```
 
-This command will start a local web server that serves the web interface of your VS Code. This allows you to access VS Code through a web browser instead of the desktop application allowing the tests to interact directly with it.
+This command will start a local web server that serves the web interface of your VS Code. This allows you to access VS Code through a web browser allowing the tests to interact directly with it.
 
 During the VSCode test runs it will install the required GLSP extension to render the graphics.
 
-Here's the extension thats being installed during the tests
+<b><u>Sidenote</b></u>: Here's the required GLSP extension thats being installed during the tests and used to render the graphics:
+
+> https://marketplace.visualstudio.com/items?itemName=Eclipse-GLSP.workflow-web-extension-demo
+
+
+Then proceed import the glsp-vscode-integration folder.
+
+Run the following command to install its dependencies.
 
 ```sh
-https://marketplace.visualstudio.com/items?itemName=Eclipse-GLSP.workflow-web-extension-demo
+yarn install
 ```
 
+> To verify the installation was successfull open the example1.wf file within the example/workspace folder.
 
 
+## Eclipse Theia GLSP Integration setup
 
-Import the glsp-vscode-integration folder
+<b><u>NOTE</u>: The Theia example can be both run inside the Theia IDE and VSCode since it mounts the IDE software on a localhost same as the previous VSCode example.</b>
 
-Run the following command to install its dependencies
+Open the glsp-theia-integration submodule folder and run the following line to install its dependencies:
 
+```sh
 yarn install
+```
 
-To verify the installation was successfull open the example1.wf file within the example/workspace folder.
+Then run the following command to initialize the project and start the application:
 
-
-Eclipse Theia GLSP Integration setup
-
-NOTE: The Theia example can be both run inside the Theia IDE and VSCode since it mounts the software on a localhost same as the previous VSCode example.
-
-Open the glsp-theia-integration submodule folder and run the following line to install its dependencies
-
-yarn install
-
-Then run the following command to initialize the project and start the application
-
+```sh
 yarn start
+```
 
-By default the application will run on the localhost:3000 port
+> By default the application will run on the <b>localhost:3000</b> port.
 
-You can open the example1.wf to assert its working as expected
+Open the `example1.wf` to assert GLSP is working as expected.
 
 
-GLSP Eclipse Integration setup
-
+## GLSP Eclipse Integration setupÑ
 Inside the glsp-eclipse-integration sudmodule, switch to the client folder and run the following command to install the client dependencies
 
+```sh
 yarn install
+```
 
 Then proceed to do the same with the server folder.
 
+```sh
 mvn clean install
+```
 
-Open Eclipse and import the following
+Open Eclipse and import the following projects:
 
-server/plugins/org.eclipse.glsp.ide.editor
-server/example/org.eclipse.glsp.ide.workflow.editor
-server/releng/org.eclipse.glsp.ide.releng.target
+| Projects                                                   
+| -------------------------------------------------------|
+| - server/plugins/org.eclipse.glsp.ide.editor
+| - server/example/org.eclipse.glsp.ide.workflow.editor
+| - server/releng/org.eclipse.glsp.ide.releng.target
+|
 
-Open server/releng/org.eclipse.glsp.ide.releng.target/xxxxx.target
+Proceed with the following:
 
-Wait for all dependencies to be downloaded and then click on Reload target platform
 
-Start an Eclipse Application WorkflowEditor.launch
+- Open `server/releng/org.eclipse.glsp.ide.releng.target/xxxxx.target`
 
-Import server/example/runtime/test
+- Wait for all dependencies to be downloaded and then click on `Reload target platform`
 
-Open example.wf and it should be displayed
+- Start an Eclipse Application WorkflowEditor.launch
 
-You need to add the following line in the 
+- Import server/example/runtime/test
+
+- Open `example.wf` and it should be displayed
+
+### Add debugging port
+
+Inside Eclipse head over to `Run < Run Configuration < Arguments < VM Arguments` and add the following line:
+
+```sh
 -Dchromium_remote_debugging_port=8888
-
-
-
-
-
-
-
+```
