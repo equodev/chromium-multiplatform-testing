@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, Keyboard } from '@playwright/test';
 import { setup_ide } from './ide_setup';
 
 test('Test example', async ({ page }) => {
@@ -8,17 +8,11 @@ test('Test example', async ({ page }) => {
 
   await setup_ide(ide, page)
 
-// TODO?
-  // const frames = await page.frames()
-  // console.log(frames)
-  // await frames[0].frameLocator('iframe[title="undefined"]').locator('#workflow-diagram_0').getByText('Push').click();
-  // await page.frameLocator('iframe[name="ad32f55e-8fd7-4463-acde-97d13190a954"]').frameLocator('iframe[title="undefined"]').locator('#workflow-diagram_0').getByText('Push').click();
-  // await page.frameLocator('iframe[name="ad32f55e-8fd7-4463-acde-97d13190a954"]').frameLocator('iframe[title="undefined"]').locator('#workflow-diagram_0').getByText('Push').click();
-  // await page.frameLocator('iframe[name="ad32f55e-8fd7-4463-acde-97d13190a954"]').frameLocator('iframe[title="undefined"]').getByRole('textbox').fill('Test');
-  // await page.frameLocator('iframe[name="ad32f55e-8fd7-4463-acde-97d13190a954"]').frameLocator('iframe[title="undefined"]').getByRole('textbox').press('Enter');
-  // await page.frameLocator('iframe[name="ad32f55e-8fd7-4463-acde-97d13190a954"]').frameLocator('iframe[title="undefined"]').locator('#workflow-diagram_0').getByText('Test').click();
+  await page.waitForSelector('g#workflow-diagram_0_task0');
+  const pushbtn = page.locator(`[id=workflow-diagram_0_task0][data-svg-metadata-parent-id]`);
+  await pushbtn.click()
+  await page.keyboard.down("Delete");
+  await page.waitForTimeout(5000)
 
-
-  // await browser.close(); // Make sure 'browser' object is defined somewhere
 })
 
