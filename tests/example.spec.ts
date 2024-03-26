@@ -3,16 +3,15 @@ import { setup_ide } from './ide_setup';
 
 test('Test example', async ({ page }) => {
   // IDE Setup
+  test.setTimeout(60000)
   const ide = process.env.IDE?.toLowerCase() ?? 'vscode'
   console.log(ide);
 
   await setup_ide(ide, page)
 
-  await page.waitForSelector('g#workflow-diagram_0_task0');
-  const pushbtn = page.locator(`[id=workflow-diagram_0_task0][data-svg-metadata-parent-id]`);
-  await pushbtn.click()
-  await page.keyboard.down("Delete");
-  await page.waitForTimeout(5000)
-
-})
-
+  // await page.frameLocator('iframe[class="webview ready"]').frameLocator('iframe[title="undefined"]').locator('#workflow-diagram_0').getByText('Push').click();
+  // Interact with the element inside the iframe
+  // await elementInsideIframe.click();
+  // await iframe.keyboard.press("Delete");
+  // await page.waitForTimeout(5000);
+});

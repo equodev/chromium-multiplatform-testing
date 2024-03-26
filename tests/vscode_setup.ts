@@ -38,6 +38,10 @@ async function vscode_setup(page: Page) {
                     await page.click('div[aria-label="example"]');
                     await page.click('div[aria-label="workspace"]');
                     await page.click('div[aria-label="example1.wf"]');
+                    await page.waitForTimeout(20000);
+                    await page.frameLocator('iframe[class="webview ready"]').frameLocator('iframe[title="undefined"]').locator('#workflow-diagram_0').getByText('Push').click();
+                    await page.keyboard.press("Delete");
+                    await page.waitForTimeout(10000)
                     resolve(); // Resolve the promise when 'Web UI' is available
                 }
             });

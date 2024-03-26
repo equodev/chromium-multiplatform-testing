@@ -1,6 +1,7 @@
 import { Page } from '@playwright/test';
 import vscode_setup from './vscode_setup'; // Import setup function for Visual Studio Code
 import theia_setup from './theia_setup';
+import eclipse_setup from './eclipse_setup ';
 // import eclipse_setup from './eclipse_setup'; // Import setup function for Eclipse
 // import theia_setup from './theia_setup'; // Import setup function for Theia
 
