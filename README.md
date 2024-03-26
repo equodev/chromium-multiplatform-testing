@@ -88,10 +88,8 @@ Open Eclipse and import the following projects:
 | - server/plugins/org.eclipse.glsp.ide.editor
 | - server/example/org.eclipse.glsp.ide.workflow.editor
 | - server/releng/org.eclipse.glsp.ide.releng.target
-|
 
 Proceed with the following:
-
 
 - Open `server/releng/org.eclipse.glsp.ide.releng.target/xxxxx.target`
 
