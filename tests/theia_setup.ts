@@ -9,22 +9,16 @@ async function theia_setup(page: Page) {
             const result = exec(`"cd" ${path} && "yarn" start`);
 
             result.stdout?.on('data', async (data) => {  
+                // Get token
                 if (data.includes('Theia app listening on')) {
                     const urlRegex = /(http?:\/\/(?:[^\s.]+\.)+[^\s.]+)(?:\.|$)/;
                     const url = await data?.match(urlRegex)[0].slice(0, -1);;
+                    // Open browser
                     await page.goto(url);
                     await page.click('li#shell-tab-explorer-view-container');
                     await page.dblclick('//div[contains(text(), "example1.wf")]');
-                    await page.waitForTimeout(3000)                    
-                    await page.waitForSelector('g#workflow-diagram_0_task0');
-                    const pushbtn = page.locator(`[id=workflow-diagram_0_task0][data-svg-metadata-parent-id]`);
-                    await pushbtn.click()
-                    await page.keyboard.down("Delete");
-                    await page.waitForTimeout(5000)
-                    await page.keyboard.press('Control+Z');
-                    await page.waitForTimeout(5000)
+                    await page.waitForTimeout(3000) // Wait for GLSP to render
                     resolve(); // Resolve the promise when 'Web UI' is available
-
                 }
             });
 
