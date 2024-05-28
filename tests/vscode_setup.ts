@@ -6,7 +6,7 @@ const path = __dirname.split('tests')[0];
 async function vscode_setup(page: Page) { 
     return new Promise<void>((resolve, reject) => {
         try {
-            const result = exec('"sh" /snap/code/155/usr/share/code/bin/code --no-sandbox serve-web');
+            const result = exec('"sh" /snap/code/current/usr/share/code/bin/code --no-sandbox serve-web');
 
             result.stdout?.on('data', async (data) => {  
                 if (data.includes('Web UI available at')) {
