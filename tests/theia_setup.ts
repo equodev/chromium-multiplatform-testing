@@ -4,7 +4,7 @@ import { exec } from 'child_process';
 const path = `${__dirname.split('tests')[0]}glsp-theia-integration`
 
 async function theia_setup(page: Page) { 
-    return new Promise<void>((resolve, reject) => {
+    return new Promise<Page>((resolve, reject) => {
         try {
             const result = exec(`"cd" ${path} && "yarn" start`);
 
@@ -16,14 +16,7 @@ async function theia_setup(page: Page) {
                     await page.click('li#shell-tab-explorer-view-container');
                     await page.dblclick('//div[contains(text(), "example1.wf")]');
                     await page.waitForTimeout(3000)                    
-                    await page.waitForSelector('g#workflow-diagram_0_task0');
-                    const pushbtn = page.locator(`[id=workflow-diagram_0_task0][data-svg-metadata-parent-id]`);
-                    await pushbtn.click()
-                    await page.keyboard.down("Delete");
-                    await page.waitForTimeout(5000)
-                    await page.keyboard.press('Control+Z');
-                    await page.waitForTimeout(5000)
-                    resolve(); // Resolve the promise when 'Web UI' is available
+                    resolve(page); // Resolve the promise when 'Web UI' is available
 
                 }
             });

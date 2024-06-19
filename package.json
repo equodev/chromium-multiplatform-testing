@@ -6,11 +6,11 @@
   "author": "mattcastells <mgulincastells@equo.dev>",
   "license": "MIT",
   "devDependencies": {
-    "@playwright/test": "^1.42.1",
+    "@playwright/test": "^1.44.1",
     "@types/node": "^20.11.30"
   },
   "scripts": {
+    "setup": "yarn install && chmod +x enable_cef_connection.sh && ./enable_cef_connection.sh",
     "test": "npx playwright test --project='chrome' --headed"
-
   }
 }
