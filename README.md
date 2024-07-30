@@ -21,7 +21,9 @@ The following lines will explain how to easily setup the submodules required to 
 
 ## VSCode GLSP Integration Setup
 
-With VSCode installed on your machine open a terminal and input the following line:
+Head over to the [vscode_setup.ts](./tests/vscode_setup.ts) file and modify the vscode binary location (results var) to point to your local binary.
+
+Open a terminal and input the following line:
 
 ```sh
 code serve-web
@@ -46,7 +48,6 @@ yarn install
 
 > To verify the installation was successfull open the example1.wf file within the example/workspace folder.
 
-
 ## Eclipse Theia GLSP Integration setup
 
 <b><u>NOTE</u>: The Theia example can be both run inside the Theia IDE and VSCode since it mounts the IDE software on a localhost same as the previous VSCode example.</b>
@@ -68,14 +69,14 @@ yarn start
 Open the `example1.wf` to assert GLSP is working as expected.
 
 
-## GLSP Eclipse Integration setupÑ
-Inside the glsp-eclipse-integration sudmodule, switch to the client folder and run the following command to install the client dependencies
+## Eclipse GLSP Integration setup
+Inside the glsp-eclipse-integration sudmodule, switch to the client folder and run the following command to install the client dependencies:
 
 ```sh
 yarn install
 ```
 
-Then proceed to do the same with the server folder.
+Then head over to the server folder and run the following command:
 
 ```sh
 mvn clean install
@@ -108,3 +109,8 @@ Inside Eclipse head over to `Run < Run Configuration < Arguments < VM Arguments`
 ```sh
 -Dchromium_remote_debugging_port=8888
 ```
+
+/home/fran/Desktop/glsp/glsp-eclipse-integration/server/
+
+mvn clean package
+
