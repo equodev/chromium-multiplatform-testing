@@ -3,7 +3,7 @@
 	url = https://github.com/eclipse-glsp/glsp-theia-integration
 [submodule "glsp-eclipse-integration"]
 	path = glsp-eclipse-integration
-	url = https://github.com/eclipse-glsp/glsp-eclipse-integration
+	url = https://github.com/equodev/glsp-eclipse-integration
 [submodule "glsp-vscode-integration"]
 	path = glsp-vscode-integration
 	url = https://github.com/eclipse-glsp/glsp-vscode-integration
