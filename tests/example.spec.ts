@@ -20,7 +20,17 @@ test('Test example', async ({ page }) => {
       break;
     }
     case "theia": {
-      await page.waitForSelector('g#workflow-diagram_0_task0');
+      await page.waitForSelector('g#workflow-diagram_0_t ask0');
+      const pushbtn = page.locator(`[id=workflow-diagram_0_task0][data-svg-metadata-parent-id]`);
+      await pushbtn.click();
+      await page.keyboard.down("Delete");
+      await page.waitForTimeout(2000);
+      await page.keyboard.press('Control+Z');
+      await page.waitForTimeout(2000);
+      break;
+    }
+    case "eclipse": {
+      await page.waitForSelector('g#workflow-diagram_0_t ask0');
       const pushbtn = page.locator(`[id=workflow-diagram_0_task0][data-svg-metadata-parent-id]`);
       await pushbtn.click();
       await page.keyboard.down("Delete");
@@ -30,7 +40,7 @@ test('Test example', async ({ page }) => {
       break;
     }
     default: {
-      console.log("asd"); // Eclipse TODO
+      console.log("Please input desired IDE");
       break;
     }
   }
