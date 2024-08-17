@@ -81,8 +81,6 @@ We provide a script to do the Eclipse setup. Switch to the **glsp-eclipse-integr
 ./setup_glsp_integration.sh
 ```
 
-- Extraer carpeta generada
-
 ### Add debugging port
 
 Inside Eclipse head over to `Run < Run Configuration < Arguments < VM Arguments` and add the following line:
