@@ -4,3 +4,7 @@
 [submodule "glsp-vscode-integration"]
 	path = glsp-vscode-integration
 	url = https://github.com/eclipse-glsp/glsp-vscode-integration
+[submodule "glsp-eclipse-integration"]
+	path = glsp-eclipse-integration
+	url = https://github.com/equodev/glsp-eclipse-integration.git
+	branch = master
