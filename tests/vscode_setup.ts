@@ -1,18 +1,19 @@
 import { test, Page } from '@playwright/test'; 
 import { exec } from 'child_process';
 
-const path = __dirname.split('tests')[0];
+let path = __dirname.split('tests')[0].replace(/\\/g, "/");
 
 async function vscode_setup(page: Page) { 
     return new Promise<void>((resolve, reject) => {
         try {
-            const result = exec('"sh" /snap/code/155/usr/share/code/bin/code --no-sandbox serve-web');
+            const result = exec('powershell.exe -command "code --no-sandbox serve-web"');
 
             result.stdout?.on('data', async (data) => {  
                 if (data.includes('Web UI available at')) {
                     // Get Token
                     const url = data.split('Web UI available at ')[1];
                     await page.goto(url);
+                    if (path.indexOf("/") > 0) path = "/" + path
                     await page.goto(`http://127.0.0.1:8000/?folder=${path}glsp-vscode-integration`);
                     
                     // Accept PopUp

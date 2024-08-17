@@ -19,11 +19,21 @@ The following lines will explain how to easily setup the submodules required to 
 
 > https://github.com/eclipse-glsp/glsp
 
+## Before running the tests
+You need to modify the *ide* variable in the *example.spec.ts* file inside the tests folder to select which IDE you want to run the tests on.
+
+
 ## VSCode GLSP Integration Setup
 
-Head over to the [vscode_setup.ts](./tests/vscode_setup.ts) file and modify the vscode binary location (results var) to point to your local binary.
+Head over to the glsp-vscode-integration folder an install its dependencies running the following line:
 
-Open a terminal and input the following line:
+```sh
+yarn install
+```
+
+Head over to the [vscode_setup.ts](./tests/vscode_setup.ts) file and modify the vscode binary location (results var) to point to your local vscode binary.
+
+In a terminal and input the following line:
 
 ```sh
 code serve-web
@@ -37,14 +47,9 @@ During the VSCode test runs it will install the required GLSP extension to rende
 
 > https://marketplace.visualstudio.com/items?itemName=Eclipse-GLSP.workflow-web-extension-demo
 
-
 Then proceed import the glsp-vscode-integration folder.
 
-Run the following command to install its dependencies.
-
-```sh
-yarn install
-```
+You should be able to run the example tests now.
 
 > To verify the installation was successfull open the example1.wf file within the example/workspace folder.
 
@@ -70,37 +75,13 @@ Open the `example1.wf` to assert GLSP is working as expected.
 
 
 ## Eclipse GLSP Integration setup
-Inside the glsp-eclipse-integration sudmodule, switch to the client folder and run the following command to install the client dependencies:
+We provide a script to do the Eclipse setup. Switch to the **glsp-eclipse-integration** folder and run the following command to install all dependencies in a bash terminal:
 
 ```sh
-yarn install
+./setup_glsp_integration.sh
 ```
 
-Then head over to the server folder and run the following command:
-
-```sh
-mvn clean install
-```
-
-Open Eclipse and import the following projects:
-
-| Projects                                                   
-| -------------------------------------------------------|
-| - server/plugins/org.eclipse.glsp.ide.editor
-| - server/example/org.eclipse.glsp.ide.workflow.editor
-| - server/releng/org.eclipse.glsp.ide.releng.target
-
-Proceed with the following:
-
-- Open `server/releng/org.eclipse.glsp.ide.releng.target/xxxxx.target`
-
-- Wait for all dependencies to be downloaded and then click on `Reload target platform`
-
-- Start an Eclipse Application WorkflowEditor.launch
-
-- Import server/example/runtime/test
-
-- Open `example.wf` and it should be displayed
+- Extraer carpeta generada
 
 ### Add debugging port
 
@@ -109,8 +90,4 @@ Inside Eclipse head over to `Run < Run Configuration < Arguments < VM Arguments`
 ```sh
 -Dchromium_remote_debugging_port=8888
 ```
-
-/home/fran/Desktop/glsp/glsp-eclipse-integration/server/
-
-mvn clean package
 

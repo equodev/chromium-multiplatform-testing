@@ -4,7 +4,7 @@ import { setup_ide } from './ide_setup';
 test('Test example', async ({ page }) => {
   // IDE Setup
   test.setTimeout(60000)
-  const ide = process.env.IDE?.toLowerCase() ?? 'theia'
+  const ide = process.env.IDE?.toLowerCase() ?? 'vscode'
   console.log("Currently running the tests on", ide);
   await setup_ide(ide, page)
 
