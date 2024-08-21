@@ -75,7 +75,7 @@ Open the `example1.wf` to assert GLSP is working as expected.
 
 
 ## Eclipse GLSP Integration setup
-We provide a script to do the Eclipse setup. Switch to the **glsp-eclipse-integration** folder and run the following command to install all dependencies in a bash terminal:
+We provide a script to do the Eclipse setup. In the parent **chromium-multiplatform-testing** folder, run the following command to install all dependencies in a bash terminal:
 
 ```sh
 ./setup_glsp_integration.sh
