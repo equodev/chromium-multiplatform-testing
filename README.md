@@ -22,6 +22,7 @@ The following lines will explain how to easily setup the submodules required to 
 ## Before running the tests
 You need to modify the *ide* variable in the *example.spec.ts* file inside the tests folder to select which IDE you want to run the tests on.
 
+It is essential to have the latest release of Visual Studio Code installed, as this is required to run the code-server-web command effectively. Keeping your VS Code up to date ensures compatibility with the latest features, security patches, and extensions.
 
 ## VSCode GLSP Integration Setup
 
