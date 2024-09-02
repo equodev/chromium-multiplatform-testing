@@ -1,6 +1,6 @@
 # Project Setup
 
-First install the project dependencies by running the following command:
+To set up the project, start by installing the necessary dependencies using the following command in the root folder:
 
 ```sh
 yarn install
@@ -8,63 +8,58 @@ yarn install
 
 ## Initializing GLSP Submodules
 
-Submodules are required to run GLSP on the different IDEs. Each of them are the correspondent integrations for the IDEs where the tests take place.  
+GLSP (Graphical Language Server Platform) submodules are required to run GLSP on different IDEs. Each submodule corresponds to a specific IDE integration for testing purposes. Initialize the submodules by executing:
 
 ```sh
 git submodule update --init
 ```
 
 ##  Disclaimer:
-The following lines will explain how to easily setup the submodules required to run our test examples. At least one of them is required to run the project. The other two will be optional. If you required more information about the GLSP projects and their integration you can check their correspondent readme inside the official GLSP Github. We simplified the setup providing a straightforward way to setup each one.
+The following sections explain how to set up the required submodules to run our test examples. At least one submodule must be set up to run the project, while the other two are optional. For more detailed information about GLSP projects and their integrations, please refer to the respective README files in the official [GLSP GitHub repository](https://github.com/eclipse-glsp/glsp). We have provided a simplified setup process to streamline the configuration of each submodule. 
 
-> https://github.com/eclipse-glsp/glsp
 
 ## Before running the tests
-You need to modify the *ide* variable in the *example.spec.ts* file inside the tests folder to select which IDE you want to run the tests on.
+Before running the tests, you need to modify the IDE variable in the `example.spec.ts` file located in the tests folder. This variable allows you to select the IDE on which the tests will run.
 
-It is essential to have the latest release of Visual Studio Code installed, as this is required to run the code-server-web command effectively. Keeping your VS Code up to date ensures compatibility with the latest features, security patches, and extensions.
+It is essential to have the latest release of [Visual Studio Code](https://code.visualstudio.com/) installed, as it is required to run the `code-server-web` command effectively. Keeping your VS Code installation up to date ensures compatibility with the latest features, security patches, and extensions.
 
 ## VSCode GLSP Integration Setup
 
-Head over to the glsp-vscode-integration folder an install its dependencies running the following line:
+1. Navigate to the glsp-vscode-integration folder and install its dependencies by running:
 
 ```sh
 yarn install
 ```
 
-Head over to the [vscode_setup.ts](./tests/vscode_setup.ts) file and modify the vscode binary location (results var) to point to your local vscode binary.
+2. Open the [vscode_setup.ts](./tests/vscode_setup.ts) file and update the vscode binary location (specified in the results variable) to point to your local VS Code binary.  file and modify the vscode binary location (results var) to point to your local vscode binary.
 
-In a terminal and input the following line:
+3. In a terminal, start the VS Code web server by running:
 
 ```sh
 code serve-web
 ```
 
-This command will start a local web server that serves the web interface of your VS Code. This allows you to access VS Code through a web browser allowing the tests to interact directly with it.
+This command launches a local web server that serves the web interface of your VS Code, allowing you to access VS Code through a web browser and enabling the tests to interact directly with it. During the VS Code test runs, the required GLSP extension will be installed to render the graphics.
 
-During the VSCode test runs it will install the required GLSP extension to render the graphics.
+<b><u>Sidenote</b></u>: [GLSP extension](https://marketplace.visualstudio.com/items?itemName=Eclipse-GLSP.workflow-web-extension-demo) is installed during the tests to render the graphics:
 
-<b><u>Sidenote</b></u>: Here's the required GLSP extension thats being installed during the tests and used to render the graphics:
+5. Import the glsp-vscode-integration folder as needed.
 
-> https://marketplace.visualstudio.com/items?itemName=Eclipse-GLSP.workflow-web-extension-demo
+After completing these steps, you should be able to run the example tests.
 
-Then proceed import the glsp-vscode-integration folder.
-
-You should be able to run the example tests now.
-
-> To verify the installation was successfull open the example1.wf file within the example/workspace folder.
+> To verify the installation was successful, open the `example1.wf` file within the example/workspace folder.
 
 ## Eclipse Theia GLSP Integration setup
 
-<b><u>NOTE</u>: The Theia example can be both run inside the Theia IDE and VSCode since it mounts the IDE software on a localhost same as the previous VSCode example.</b>
+<b><u>NOTE</u>: The Theia example can be run inside both the Theia IDE and VS Code, as it mounts the IDE software on a localhost, similar to the previous VS Code example.</b>
 
-Open the glsp-theia-integration submodule folder and run the following line to install its dependencies:
+1. Open the glsp-theia-integration submodule folder and install its dependencies by running:
 
 ```sh
 yarn install
 ```
 
-Then run the following command to initialize the project and start the application:
+2. Start the application by running:
 
 ```sh
 yarn start
@@ -72,11 +67,11 @@ yarn start
 
 > By default the application will run on the <b>localhost:3000</b> port.
 
-Open the `example1.wf` to assert GLSP is working as expected.
+3. Open the `example1.wf` file to confirm that GLSP is working as expected.
 
 
 ## Eclipse GLSP Integration setup
-We provide a script to do the Eclipse setup. In the parent **chromium-multiplatform-testing** folder, run the following command to install all dependencies in a bash terminal:
+A script is provided to streamline the Eclipse setup process. In the parent `chromium-multiplatform-testing` folder, execute the following command in a bash terminal to install all dependencies:
 
 ```sh
 ./setup_glsp_integration.sh
@@ -84,7 +79,10 @@ We provide a script to do the Eclipse setup. In the parent **chromium-multiplatf
 
 ### Add debugging port
 
-Inside Eclipse head over to `Run < Run Configuration < Arguments < VM Arguments` and add the following line:
+To add a debugging port in Eclipse, follow these steps:
+
+1. Navigate to Run > Run Configuration > Arguments > VM Arguments.
+2. Add the following line to the VM arguments:
 
 ```sh
 -Dchromium_remote_debugging_port=8888
