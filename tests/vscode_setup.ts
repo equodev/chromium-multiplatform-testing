@@ -1,4 +1,4 @@
-import { test, Page } from '@playwright/test'; 
+import { test, Page, BrowserContext, chromium } from '@playwright/test'; 
 import { exec } from 'child_process';
 
 let path = __dirname.split('tests')[0].replace(/\\/g, "/");
@@ -19,24 +19,22 @@ async function vscode_setup(page: Page) {
                     // Accept PopUp
                     await page.waitForSelector('text="Yes, I trust the authors"');
                     await page.click('text="Yes, I trust the authors"');
+                    
+                    // Open Debug
+                    await page.waitForSelector('.codicon-run-view-icon');
+                    await page.click('.codicon-run-view-icon');
+                    await page.waitForSelector('.codicon-debug-start');
+                    await page.click('.codicon-debug-start');
+                    await page.waitForTimeout(2000);
 
-                    // Install GLSP Extension
-                    await page.waitForSelector('a[aria-label="Extensions (Ctrl+Shift+X)"]');
-                    await page.click('a[aria-label="Extensions (Ctrl+Shift+X)"]');
-                    await page.waitForTimeout(3000);
-                    await page.click('div.view-line');
-                    await page.fill('textarea.inputarea', 'glsp');
-                    await page.click("div.extension-list-item")
-                    await page.waitForTimeout(3000);
-                    await page.click('a.install');
-                    await page.waitForTimeout(5000); // Wait for installation and refresh
+                    // Switch to new page
+                    const pages = page.context().pages()
+                    const debugPage = pages[1]
+                    await debugPage.bringToFront();
+                    debugPage.waitForTimeout(1000); // Give time for backend to load
 
                     // Navigate to file explorer and open GLSP workflow
-                    await page.click('a[aria-label="Explorer (Ctrl+Shift+E)"]');
-                    await page.click('div[aria-label="example"]');
-                    await page.click('div[aria-label="workspace"]');
-                    await page.click('div[aria-label="example1.wf"]');
-                    await page.waitForTimeout(15000); // Wait for GLSP to render
+                    await debugPage.dblclick('div[aria-label="example1.wf"]');
                     resolve(); // Resolve the promise when 'Web UI' is available
                 }
             });
