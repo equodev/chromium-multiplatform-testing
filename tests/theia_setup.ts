@@ -6,8 +6,7 @@ const path = `${__dirname.split('tests')[0]}glsp-theia-integration`
 async function theia_setup(page: Page) { 
     return new Promise<void>((resolve, reject) => {
         try {
-            const result = exec(`"cd" ${path} && "yarn" start`);
-
+            const result = exec(`"cd" ${path} && "yarn" browser start`);
             result.stdout?.on('data', async (data) => {  
                 // Get token
                 if (data.includes('Theia app listening on')) {

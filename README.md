@@ -31,7 +31,7 @@ It is essential to have the latest release of [Visual Studio Code](https://code.
 yarn install
 ```
 
-2. Open the [vscode_setup.ts](./tests/vscode_setup.ts) file and update the vscode binary location (specified in the results variable) to point to your local VS Code binary.  file and modify the vscode binary location (results var) to point to your local vscode binary.
+2. Open the [vscode_setup.ts](./tests/vscode_setup.ts) file and update the vscode binary location (specified in the results variable) to point to your local VS Code binary file and modify the vscode binary location (results var) to point to your local vscode binary.
 
 3. In a terminal, start the VS Code web server by running:
 
@@ -43,7 +43,7 @@ This command launches a local web server that serves the web interface of your V
 
 <b><u>Sidenote</b></u>: [GLSP extension](https://marketplace.visualstudio.com/items?itemName=Eclipse-GLSP.workflow-web-extension-demo) is installed during the tests to render the graphics:
 
-5. Import the glsp-vscode-integration folder as needed.
+4. Import the glsp-vscode-integration folder as needed.
 
 After completing these steps, you should be able to run the example tests.
 
@@ -56,13 +56,13 @@ After completing these steps, you should be able to run the example tests.
 1. Open the glsp-theia-integration submodule folder and install its dependencies by running:
 
 ```sh
-yarn install
+yarn browser install
 ```
 
 2. Start the application by running:
 
 ```sh
-yarn start
+yarn browser start
 ```
 
 > By default the application will run on the <b>localhost:3000</b> port.
