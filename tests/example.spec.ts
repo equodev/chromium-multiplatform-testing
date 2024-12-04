@@ -1,15 +1,14 @@
-// import { test, expect, Keyboard, Page, Browser} from '@playwright/test';
-import { test, Browser, Page } from '@playwright/test';
-import { setup_ide } from './ide_setup';
+import { test, expect, Keyboard, Page } from '@playwright/test';
+import { ide_setup } from './ide_setup';
 import { execSync } from 'child_process';
 import { platform } from 'os';
 
 const isMac = () => platform() === 'darwin';
-const ide = process.env.IDE?.toLowerCase() ?? 'theia';
+const ide = process.env.IDE?.toLowerCase() ?? 'vscode';
 
-test.afterEach(async () => {
+test.beforeEach(async () => {
   try {
-    // Run the kill command to terminate the process using port 3000
+    // Run the kill command to terminate the server process
     switch (ide) {
       case "vscode":
         execSync('kill -9 $(lsof -t -i:8000)', { stdio: 'ignore' });
@@ -31,26 +30,32 @@ test('Test example', async ({ page }) => {
   // IDE Setup
   test.setTimeout(30000);
   console.log("Currently running the tests on", ide);
-  await setup_ide(ide, page);
+  await ide_setup(ide, page);
 
   // Match IDE
   switch (ide) {
     case "vscode": {
       const debugPage = await switchTab(page);
-      await debugPage.frameLocator('iframe[class="webview ready"]')
-        .frameLocator('iframe[title="undefined"]')
-        .locator('#workflow-diagram_0')
-        .getByText('Push').click();
+      const element = debugPage.frameLocator('iframe[class="webview ready"]')
+      .frameLocator('iframe[title="undefined"]')
+      .locator('#workflow-diagram_0')
+      .getByText('Push')
+      await element.click();
       await debugPage.keyboard.press("Delete");
-      await debugPage.waitForTimeout(2000);
 
+      // Assert element has been deleted
+      await expect(element).toBeHidden();
+      await debugPage.waitForTimeout(1000);
+
+      // Assert element is present again
       if (isMac()) {
         await debugPage.keyboard.press('Meta+Z');
       } else {
         await debugPage.keyboard.press('Control+Z');
       }
+      await expect(element).toBeVisible();
 
-      await debugPage.waitForTimeout(2000);
+      // Teardown
       await page.close();
       await debugPage.close();
 
@@ -61,6 +66,7 @@ test('Test example', async ({ page }) => {
       const pushbtn = page.locator(`[id=workflow-diagram_0_task_Push][data-svg-metadata-parent-id]`);
       await pushbtn.click();
       await page.keyboard.down("Delete");
+      await expect(pushbtn).toBeHidden();
       await page.waitForTimeout(2000);
 
       if (isMac()) {
@@ -68,8 +74,9 @@ test('Test example', async ({ page }) => {
       } else {
         await page.keyboard.press('Control+Z');
       }
-      await page.waitForTimeout(2000);
-      await page.close();
+      await expect(pushbtn).toBeVisible();
+      await page.waitForTimeout(4000);
+      // await page.close();
 
       break;
     }

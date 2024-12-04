@@ -6,7 +6,7 @@ let path = __dirname.split('tests')[0].replace(/\\/g, "/");
 async function vscode_setup(page: Page) { 
     return new Promise<void>((resolve, reject) => {
         try {
-            const result = exec('powershell.exe -command "code --no-sandbox serve-web"');
+            const result = exec('/usr/local/bin/code --no-sandbox --disable-https serve-web');
 
             result.stdout?.on('data', async (data) => {  
                 if (data.includes('Web UI available at')) {
