@@ -77,6 +77,14 @@ A script is provided to streamline the Eclipse setup process. In the parent `chr
 ./setup_glsp_integration.sh
 ```
 
+### Quick note
+
+If you are having trouble running the Eclipse app using MacOS or a Unix based system, try the following command to enable extended attributes in case the app seems to be damaged.
+
+```sh
+xattr -cr /path/to/Eclipse.app
+```
+
 ### Add debugging port
 
 To add a debugging port in Eclipse, follow these steps:
@@ -87,4 +95,6 @@ To add a debugging port in Eclipse, follow these steps:
 ```sh
 -Dchromium_remote_debugging_port=8888
 ```
+
+
 
