@@ -81,9 +81,12 @@ async function vscode_setup(page: Page) {
     });
 
 }
+
 function replaceFolderPathInUrl(url: string, newPath: string): string {
-    // Use a regular expression to match the part of the URL after 'folder=' and before '&payload'
+    const isWindows = process.platform === 'win32';
+    const adjustedPath = isWindows ? `/${newPath}` : newPath;
     const regex = /(?<=folder=)([^&]*)/;
-    return url.replace(regex, newPath);
+    return url.replace(regex, adjustedPath);
   }
+
 export default vscode_setup;
