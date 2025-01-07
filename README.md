@@ -76,6 +76,11 @@ A script is provided to streamline the Eclipse setup process. In the parent `chr
 ```sh
 ./setup_glsp_integration.sh
 ```
+To run eclipse tests a modification in playwright is necessary for it to enable cef connection:
+
+```sh
+./enable_cef_connection.sh
+```
 
 ### Add debugging port
 
