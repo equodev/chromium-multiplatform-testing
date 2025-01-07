@@ -1,11 +1,11 @@
 // import { test, expect, Keyboard, Page, Browser} from '@playwright/test';
-import { test, Browser, Page } from '@playwright/test';
+import { test, Browser, Page, expect } from '@playwright/test';
 import { setup_ide } from './ide_setup';
 import { execSync } from 'child_process';
 import { platform } from 'os';
 
 const isMac = () => platform() === 'darwin';
-const ide = process.env.IDE?.toLowerCase() ?? 'vscode';
+const ide = process.env.IDE?.toLowerCase() ?? 'eclipse';
 
 test.afterEach(async () => {
   const port = ide === "vscode" ? 8000 : ide === "theia" ? 3000 : null;
@@ -20,7 +20,7 @@ test.afterEach(async () => {
 });
 
 test('Remove first node', async ({ page }) => {
-  test.setTimeout(30000);
+  test.setTimeout(15000);
   console.log("Currently running the tests on", ide);
   let testPage: any = await setup_ide(ide, page);
   let vscodeIframe;
@@ -28,18 +28,33 @@ test('Remove first node', async ({ page }) => {
     vscodeIframe = testPage.frameLocator('iframe.webview.ready').frameLocator('iframe');
   }
   const nodeClass = 'g.node.task.manual.classForTestingPurposes'
-  await removeNodeAndUndo(testPage, vscodeIframe, nodeClass);
+  await renameNodeExample(testPage, vscodeIframe, nodeClass);
   await page.close();
 });
 
-async function removeNodeAndUndo(debugPage, iframe, nodeClass) {
+async function renameNodeExample(debugPage, iframe, nodeClass) {
   const targetLocator = iframe ?? debugPage;
-  await targetLocator.locator(nodeClass).first().click();
-  await debugPage.keyboard.press("Delete");
-  await debugPage.waitForTimeout(2000);
-  await debugPage.keyboard.press(`${isMac() ? 'Meta' : 'Control'}+Z`);
-  await debugPage.waitForTimeout(2000);
+
+  // Change initial node text
+  await targetLocator.locator(nodeClass).first().dblclick();
+  await targetLocator.locator('input').first().fill("Hello");
+  await targetLocator.keyboard.press("Enter");
+
+  // Assert text has been changed accordingly
+  const element = await targetLocator.locator(nodeClass).first();
+  const textContent = await element.textContent();
+  await expect(textContent).toContain("Hello");
+
+  // Change text back to initial state
+  await targetLocator.locator(nodeClass).first().dblclick();
+  await targetLocator.locator('input').first().fill("Push");
+  await targetLocator.keyboard.press("Enter");
+
+  // Assert text has been changed accordingly
+  const updatedTextContent = await element.textContent();
+  await expect(updatedTextContent).toContain("Push");
+
+  // Close browser
   ide === 'vscode' ? await debugPage.close() : '';
 }
-
 

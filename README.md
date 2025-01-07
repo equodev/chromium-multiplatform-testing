@@ -56,10 +56,16 @@ After completing these steps, you should be able to run the example tests.
 1. Open the glsp-theia-integration submodule folder and install its dependencies by running:
 
 ```sh
-yarn browser install
+yarn install
 ```
 
-2. Start the application by running:
+2. To build the browser application execute:
+
+```sh
+yarn browser build
+```
+
+3. Start the application by running:
 
 ```sh
 yarn browser start

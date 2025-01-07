@@ -1,5 +1,6 @@
 import { test, Page } from '@playwright/test'; 
 import { exec } from 'child_process';
+import { log } from 'console';
 
 const path = `${__dirname.split('tests')[0]}glsp-theia-integration`
 const path2 = `${__dirname.split('tests')[0]}test-workflow`
@@ -7,7 +8,7 @@ const path2 = `${__dirname.split('tests')[0]}test-workflow`
 async function theia_setup(page: Page) { 
     return new Promise<Page>((resolve, reject) => {
         try {
-            const result = exec(`"cd" ${path} && "yarn" browser start`);
+            const result = exec(`cd ${path} && "yarn" browser start`);
             result.stdout?.on('data', async (data) => {  
                 // Get token
                 if (data.includes('Theia app listening on')) {
@@ -24,6 +25,7 @@ async function theia_setup(page: Page) {
             });
 
             result.stderr?.on('data', (data) => {
+                console.log(data);
                 // Handle stderr data if needed
             });
         } catch (error) {
