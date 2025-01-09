@@ -3,7 +3,7 @@ import { setup_ide } from './ide_setup';
 import { execSync } from 'child_process';
 import os, { platform } from 'os';
 
-const ide = process.env.IDE?.toLowerCase() ?? 'vscode';
+const ide = process.env.IDE?.toLowerCase() ?? 'eclipse';
 
 test.afterEach(async () => {
   const port = ide === "vscode" ? 8000 : ide === "theia" ? 3000 : null;

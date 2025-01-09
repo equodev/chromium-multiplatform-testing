@@ -77,16 +77,18 @@ yarn browser start
 
 
 ## Eclipse GLSP Integration setup
+First, to run eclipse tests a modification in playwright is necessary for it to enable cef connection:
+
+```sh
+./enable_cef_connection.sh
+```
+
 A script is provided to streamline the Eclipse setup process. In the parent `chromium-multiplatform-testing` folder, execute the following command in a bash terminal to install all dependencies:
 
 ```sh
 ./setup_glsp_integration.sh
 ```
-To run eclipse tests a modification in playwright is necessary for it to enable cef connection:
 
-```sh
-./enable_cef_connection.sh
-```
 
 ### Add debugging port
 

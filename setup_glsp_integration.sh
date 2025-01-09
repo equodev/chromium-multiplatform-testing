@@ -3,7 +3,7 @@ OS=$(uname -s)
 ARCH=$(uname -m)
 
 # Look for the Eclipse executable in the products folder
-PRODUCTS_DIR="glsp-eclipse-integration/server/releng/org.eclipse.glsp.ide.repository/target/products"
+PRODUCTS_DIR="glsp-eclipse-integration/server/releng/org.eclipse.glsp.ide.repository/target/products/"
 
 if [[ "$OS" == "Linux" ]]; then
     ECLIPSE_EXEC=$(find "$PRODUCTS_DIR" -maxdepth 1 -type f -name "eclipse" | head -n 1)
@@ -70,6 +70,7 @@ if [[ -z "$ECLIPSE_EXEC" ]]; then
     cd ../../../../../../ 
     ECLIPSE_EXEC=$(find "$PRODUCTS_DIR" -maxdepth 1 -type f \( -name "eclipse" -o -name "Eclipse.app" -o -name "eclipse.exe" \) | head -n 1)
     
+    exit 0
 fi
 
 echo $(pwd) 
