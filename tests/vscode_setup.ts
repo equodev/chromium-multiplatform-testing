@@ -57,7 +57,7 @@ async function vscode_setup(page: Page) {
 
                     // const testPage = page.context().pages()[1];
                     await debugPage.bringToFront();
-                    const workflowPath = replaceFolderPathInUrl(debugPage.url(), __dirname.split('tests')[0].replace(/\\/g, "/") + 'test-workflow')
+                    const workflowPath = replaceFolderPathInUrl(debugPage.url(), __dirname.split('tests')[0].replace(/\\/g, "/") + 'resources/test-workflow')
                     await debugPage.goto(workflowPath);
                     await debugPage.waitForSelector('text="Yes, I trust the authors"');
                     await debugPage.click('text="Yes, I trust the authors"');

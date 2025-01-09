@@ -86,7 +86,7 @@
         "y": 100
       },
       "size": {
-        "width": 72.921875,
+        "width": 73.1171875,
         "height": 30
       },
       "layout": "hbox",
@@ -122,7 +122,7 @@
           "cssClasses": [],
           "type": "label:heading",
           "alignment": {
-            "x": 15.9609375,
+            "x": 15.953125,
             "y": 13
           },
           "id": "task_Push_label",
@@ -132,7 +132,7 @@
             "y": 7
           },
           "size": {
-            "width": 31.921875,
+            "width": 32.1171875,
             "height": 16
           },
           "children": []

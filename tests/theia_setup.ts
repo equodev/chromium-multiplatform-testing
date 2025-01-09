@@ -3,7 +3,7 @@ import { exec } from 'child_process';
 import { log } from 'console';
 
 const path = `${__dirname.split('tests')[0]}glsp-theia-integration`
-const path2 = `${__dirname.split('tests')[0]}test-workflow`
+const path2 = `${__dirname.split('tests')[0]}resources/test-workflow`
 
 async function theia_setup(page: Page) { 
     return new Promise<Page>((resolve, reject) => {
