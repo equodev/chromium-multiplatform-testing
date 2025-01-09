@@ -3,12 +3,12 @@ OS=$(uname -s)
 ARCH=$(uname -m)
 
 # Look for the Eclipse executable in the products folder
-PRODUCTS_DIR="glsp-eclipse-integration/server/releng/org.eclipse.glsp.ide.repository/target/products/"
+PRODUCTS_DIR="glsp-eclipse-integration/server/releng/org.eclipse.glsp.ide.repository/target/products"
 
 if [[ "$OS" == "Linux" ]]; then
     ECLIPSE_EXEC=$(find "$PRODUCTS_DIR" -maxdepth 1 -type f -name "eclipse" | head -n 1)
 elif [[ "$OS" == "Darwin" ]]; then
-    ECLIPSE_EXEC=$(find "$PRODUCTS_DIR" -maxdepth 1 -type f -name "Eclipse.app" | head -n 1)
+    ECLIPSE_EXEC=$(find "$PRODUCTS_DIR" -maxdepth 1 -type d -name "Eclipse.app" | head -n 1)
 elif [[ "$OS" =~ CYGWIN|MINGW|MSYS ]]; then
     ECLIPSE_EXEC=$(find "$PRODUCTS_DIR" -maxdepth 1 -type f -name "eclipse.exe" | head -n 1)
 else
@@ -109,9 +109,14 @@ chmod +x "$ECLIPSE_EXEC"
 # Run Eclipse with the specified workspace
 echo "Launching Eclipse with workspace at $WORKSPACE_PATH..."
 case "$ECLIPSE_EXEC" in
-    *.app) open -a "$ECLIPSE_EXEC" --args -nosplash -data "$WORKSPACE_PATH" ;;  # macOS
-    *.exe) "$ECLIPSE_EXEC" -nosplash -data "$WORKSPACE_PATH" ;;                 # Windows
-    *) ./"$ECLIPSE_EXEC" -nosplash -data "$WORKSPACE_PATH" ;;                   # Linux
+    *.app) 
+        # Convert relative path to absolute
+        ABSOLUTE_EXEC=$(cd "$(dirname "$ECLIPSE_EXEC")" && pwd)/$(basename "$ECLIPSE_EXEC")
+        open -a "$ABSOLUTE_EXEC" --args -nosplash -data "$WORKSPACE_PATH"
+        ;;
+    *.exe) "$ECLIPSE_EXEC" -nosplash -data "$WORKSPACE_PATH" ;;  # Windows
+    *) ./"$ECLIPSE_EXEC" -nosplash -data "$WORKSPACE_PATH" ;;    # Linux
 esac
+
 
 echo "Eclipse has been started successfully!"
