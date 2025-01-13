@@ -4,7 +4,7 @@ ARCH=$(uname -m)
 
 # Look for the Eclipse executable in the products folder
 PRODUCTS_DIR="glsp-eclipse-integration/server/releng/org.eclipse.glsp.ide.repository/target/products/"
-
+TEST_WORKFLOW_PATH=$(pwd)/resources/test-workflow 
 if [[ "$OS" == "Linux" ]]; then
     ECLIPSE_EXEC=$(find "$PRODUCTS_DIR" -maxdepth 1 -type f -name "eclipse" | head -n 1)
 elif [[ "$OS" == "Darwin" ]]; then
@@ -73,10 +73,15 @@ if [[ -z "$ECLIPSE_EXEC" ]]; then
     exit 0
 fi
 
-echo $(pwd) 
 # Ensure the executable is found before proceeding
 if [[ -z "$ECLIPSE_EXEC" ]]; then
     echo "Eclipse executable still not found. Exiting."
+    exit 1
+fi
+
+# Verify the test-workflow path
+if [[ ! -d "$TEST_WORKFLOW_PATH" ]]; then
+    echo "Error: Test-workflow project directory not found at $TEST_WORKFLOW_PATH"
     exit 1
 fi
 
@@ -107,17 +112,19 @@ fi
 echo "Setting executable permissions on $ECLIPSE_EXEC..."
 chmod +x "$ECLIPSE_EXEC"
 
-# Run Eclipse with the specified workspace
+# Run Eclipse with the specified workspace and import the project
 echo "Launching Eclipse with workspace at $WORKSPACE_PATH..."
 case "$ECLIPSE_EXEC" in
     *.app) 
-        # Convert relative path to absolute
         ABSOLUTE_EXEC=$(cd "$(dirname "$ECLIPSE_EXEC")" && pwd)/$(basename "$ECLIPSE_EXEC")
-        open -a "$ABSOLUTE_EXEC" --args -nosplash -data "$WORKSPACE_PATH"
+        open -a "$ABSOLUTE_EXEC" --args -nosplash -data "$WORKSPACE_PATH" -import "$TEST_WORKFLOW_PATH"
         ;;
-    *.exe) "$ECLIPSE_EXEC" -nosplash -data "$WORKSPACE_PATH" ;;  # Windows
-    *) ./"$ECLIPSE_EXEC" -nosplash -data "$WORKSPACE_PATH" ;;    # Linux
+    *.exe) 
+        "$ECLIPSE_EXEC" -nosplash -data "$WORKSPACE_PATH" -import "$TEST_WORKFLOW_PATH"
+        ;;  # Windows
+    *) 
+        ./"$ECLIPSE_EXEC" -nosplash -data "$WORKSPACE_PATH" -import "$TEST_WORKFLOW_PATH"
+        ;;    # Linux
 esac
 
-
-echo "Eclipse has been started successfully!"
+echo "Eclipse has been started successfully and the project has been imported!"
