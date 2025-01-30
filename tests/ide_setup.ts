@@ -8,7 +8,8 @@ export async function setup_ide(ide: string, page: Page) {
     // Check which IDE is provided and call the respective setup function
     switch (ide) {
         case 'vscode':
-            const vscodePage = await vscode_setup(page); 
+            const debugPage: Page = await vscode_setup(page) as Page; 
+            const vscodePage = debugPage.frameLocator('iframe.webview.ready').frameLocator('iframe')
             return vscodePage;
         case 'theia':
             const theiaPage = await theia_setup(page); 

@@ -1,10 +1,12 @@
+#!/bin/bash
+
 # Detect OS
 OS=$(uname -s)
 ARCH=$(uname -m)
 
 # Look for the Eclipse executable in the products folder
 PRODUCTS_DIR="glsp-eclipse-integration/server/releng/org.eclipse.glsp.ide.repository/target/products/"
-TEST_WORKFLOW_PATH=$(pwd)/resources/test-workflow 
+TEST_WORKFLOW_PATH=$(pwd)/resources/test-workflow/example1.wf
 if [[ "$OS" == "Linux" ]]; then
     ECLIPSE_EXEC=$(find "$PRODUCTS_DIR" -maxdepth 1 -type f -name "eclipse" | head -n 1)
 elif [[ "$OS" == "Darwin" ]]; then
@@ -79,12 +81,6 @@ if [[ -z "$ECLIPSE_EXEC" ]]; then
     exit 1
 fi
 
-# Verify the test-workflow path
-if [[ ! -d "$TEST_WORKFLOW_PATH" ]]; then
-    echo "Error: Test-workflow project directory not found at $TEST_WORKFLOW_PATH"
-    exit 1
-fi
-
 # Log the current directory before setting the workspace path
 echo "Eclipse executable found: $ECLIPSE_EXEC"
 echo "Current directory: $(pwd)"
@@ -110,6 +106,7 @@ fi
 
 # Set executable permissions on Eclipse
 echo "Setting executable permissions on $ECLIPSE_EXEC..."
+echo "Workflow path $TEST_WORKFLOW_PATH..."
 chmod +x "$ECLIPSE_EXEC"
 
 # Run Eclipse with the specified workspace and import the project
@@ -117,13 +114,13 @@ echo "Launching Eclipse with workspace at $WORKSPACE_PATH..."
 case "$ECLIPSE_EXEC" in
     *.app) 
         ABSOLUTE_EXEC=$(cd "$(dirname "$ECLIPSE_EXEC")" && pwd)/$(basename "$ECLIPSE_EXEC")
-        open -a "$ABSOLUTE_EXEC" --args -nosplash -data "$WORKSPACE_PATH" -import "$TEST_WORKFLOW_PATH"
+        open -a "$ABSOLUTE_EXEC" --args -nosplash -data "$WORKSPACE_PATH" --launcher.openFile "$TEST_WORKFLOW_PATH"
         ;;
     *.exe) 
-        "$ECLIPSE_EXEC" -nosplash -data "$WORKSPACE_PATH" -import "$TEST_WORKFLOW_PATH"
+        "$ECLIPSE_EXEC" -nosplash -data "$WORKSPACE_PATH" --launcher.openFile "$TEST_WORKFLOW_PATH"
         ;;  # Windows
     *) 
-        ./"$ECLIPSE_EXEC" -nosplash -data "$WORKSPACE_PATH" -import "$TEST_WORKFLOW_PATH"
+        ./"$ECLIPSE_EXEC" -nosplash -data "$WORKSPACE_PATH" --launcher.openFile "$TEST_WORKFLOW_PATH"
         ;;    # Linux
 esac
 

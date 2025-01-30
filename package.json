@@ -10,7 +10,9 @@
     "@types/node": "^20.11.30"
   },
   "scripts": {
-    "test": "npx playwright test --project='chrome' --headed"
-
+    "setup": "npm install && ./enable_cef_connection.sh",
+    "vscode": "IDE=vscode npx playwright test tests/example.spec.ts --headed",
+    "theia": "IDE=theia npx playwright test tests/example.spec.ts --headed",
+    "eclipse": "IDE=eclipse npx playwright test tests/example.spec.ts --headed"
   }
 }
