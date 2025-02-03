@@ -21,6 +21,10 @@ git --version # Ensure Git is available
 code -v      # Check VSCode installation
 ```
 
+### **Reporting Issues**
+
+If you encounter any issues while setting up or running the project, please create an issue in our repository so we can review and address it. You can submit an issue [here](https://github.com/equodev/chromium-multiplatform-testing/issues).
+
 # Project Setup
 
 To set up the project, start by installing the necessary dependencies using the following command in the root folder:
