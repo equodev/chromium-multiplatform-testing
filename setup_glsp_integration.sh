@@ -109,19 +109,37 @@ echo "Setting executable permissions on $ECLIPSE_EXEC..."
 echo "Workflow path $TEST_WORKFLOW_PATH..."
 chmod +x "$ECLIPSE_EXEC"
 
+# # Run Eclipse with the specified workspace and import the project
+# echo "Launching Eclipse with workspace at $WORKSPACE_PATH..."
+# case "$ECLIPSE_EXEC" in
+#     *.app) 
+#         ABSOLUTE_EXEC=$(cd "$(dirname "$ECLIPSE_EXEC")" && pwd)/$(basename "$ECLIPSE_EXEC")
+#         open -a "$ABSOLUTE_EXEC" --args -nosplash -data "$WORKSPACE_PATH" --launcher.openFile "$TEST_WORKFLOW_PATH"
+#         ;;
+#     *.exe) 
+#         "$ECLIPSE_EXEC" -nosplash -data "$WORKSPACE_PATH" --launcher.openFile "$TEST_WORKFLOW_PATH"
+#         ;;  # Windows
+#     *) 
+#         ./"$ECLIPSE_EXEC" -nosplash -data "$WORKSPACE_PATH" --launcher.openFile "$TEST_WORKFLOW_PATH"
+#         ;;    # Linux
+# esac
+
 # Run Eclipse with the specified workspace and import the project
 echo "Launching Eclipse with workspace at $WORKSPACE_PATH..."
 case "$ECLIPSE_EXEC" in
     *.app) 
         ABSOLUTE_EXEC=$(cd "$(dirname "$ECLIPSE_EXEC")" && pwd)/$(basename "$ECLIPSE_EXEC")
-        open -a "$ABSOLUTE_EXEC" --args -nosplash -data "$WORKSPACE_PATH" --launcher.openFile "$TEST_WORKFLOW_PATH"
+        open -a "$ABSOLUTE_EXEC" --args -nosplash -data "$WORKSPACE_PATH" -import "$TEST_WORKFLOW_PATH"
         ;;
     *.exe) 
-        "$ECLIPSE_EXEC" -nosplash -data "$WORKSPACE_PATH" --launcher.openFile "$TEST_WORKFLOW_PATH"
+        "$ECLIPSE_EXEC" -nosplash -data "$WORKSPACE_PATH" -import "$TEST_WORKFLOW_PATH"
         ;;  # Windows
     *) 
-        ./"$ECLIPSE_EXEC" -nosplash -data "$WORKSPACE_PATH" --launcher.openFile "$TEST_WORKFLOW_PATH"
+        ./"$ECLIPSE_EXEC" -nosplash -data "$WORKSPACE_PATH" -import "$TEST_WORKFLOW_PATH"
         ;;    # Linux
 esac
 
 echo "Eclipse has been started successfully and the project has been imported!"
+
+
+

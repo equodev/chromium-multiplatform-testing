@@ -6,7 +6,17 @@ const path = `${__dirname.split('tests')[0]}glsp-theia-integration`
 async function eclipse_setup(page: Page) { 
     return new Promise<Page | undefined>((resolve, reject) => {
             try {
+                
                 const result = exec("./setup_glsp_integration.sh");
+                const { execSync } = require("child_process");
+
+                try {
+                    const result = execSync("./setup_glsp_integration.sh", { stdio: "inherit" });
+                    console.log("Script executed successfully");
+                } catch (error) {
+                    console.error("Error executing the script:", error);
+                }
+        
                 result.stdout?.on('data', async (data) => {  
                     // Get token
                     if (data.includes('Launching Eclipse with workspace')) {
@@ -16,7 +26,7 @@ async function eclipse_setup(page: Page) {
                     }
                 });
                 result.stderr?.on('data', (data) => {
-                    // console.log(data);
+                    console.log(data);
                     // Handle stderr data if needed
                 });
             } catch (error) {
