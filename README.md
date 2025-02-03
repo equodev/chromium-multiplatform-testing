@@ -1,3 +1,26 @@
+## Prerequisites
+
+Before setting up the project, ensure you have the following dependencies installed:
+
+### **Required Software**
+
+- **Java 17** – Ensure `java -version` returns Java 17.
+- **Node.js 20.17.0** – Check with `node -v`.
+- **Git** – Required for submodule management (`git submodule update --init`).
+- **Visual Studio Code (Latest Version)** – Required for running `code serve-web` and tests.
+- **GLSP Extension for VSCode** – Installed automatically during tests ([Marketplace](https://marketplace.visualstudio.com/items?itemName=Eclipse-GLSP.workflow-web-extension-demo)).
+- **Bash** – Required to run .sh scripts (use WSL or Git Bash on Windows).
+- **Playwright** (for Eclipse GLSP Integration tests) – Included in `devDependencies` but can be installed manually if needed.
+
+### **Verify Installation**
+
+```sh
+node -v      # Should return v20.17.0
+java -version # Should return Java 17
+git --version # Ensure Git is available
+code -v      # Check VSCode installation
+```
+
 # Project Setup
 
 To set up the project, start by installing the necessary dependencies using the following command in the root folder:
