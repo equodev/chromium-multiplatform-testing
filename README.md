@@ -128,3 +128,14 @@ To add a debugging port in Eclipse, follow these steps:
 -Dchromium_remote_debugging_port=8888
 ```
 
+### Windows Defender Warning
+
+When launching the generated Eclipse application for the first time on Windows, Windows Defender may flag it as a potential threat or block its execution. This is a false positive, and you can safely allow the application to run.
+
+#### How to Resolve:
+
+1. If Windows Defender prompts a security warning, click **More info**.
+2. Then, click **Run anyway** to proceed.
+3. If necessary, add the Eclipse executable to the list of allowed applications in Windows Security.
+
+This issue typically occurs because the executable is not yet recognized by Microsoft's security databases, but it does not pose any actual risk.
