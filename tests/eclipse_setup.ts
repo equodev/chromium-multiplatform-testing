@@ -1,13 +1,16 @@
 import { Page, chromium, Browser } from '@playwright/test';
 import { exec } from 'child_process';
+import { log } from 'console';
+import * as path from "path"; 
 
-const path = `${__dirname.split('tests')[0]}/resources/test-workflow/example1.wf`;
-const encodedNewPath = encodeURIComponent(path);
+let workflowPath = path.resolve(__dirname, "../resources/test-workflow/example1.wf");
+workflowPath = workflowPath.replace(/\\/g, "/"); // Convert Windows backslashes to forward slashes
+const encodedNewPath = encodeURIComponent(workflowPath);
 
 async function eclipse_setup(page: Page) { 
     return new Promise<Page | undefined>((resolve, reject) => {
             try {
-                const result = exec("bash ./setup_glsp_integration.sh");
+                const result = exec("./setup_glsp_integration.sh");
                 result.stdout?.on('data', async (data) => {  
                     // Get token
                     if (data.includes('Launching Eclipse with workspace')) {
@@ -18,7 +21,7 @@ async function eclipse_setup(page: Page) {
                     }
                 });
                 result.stderr?.on('data', (data) => {
-                    // console.log(data);
+                    console.log(data);
                     // Handle stderr data if needed
                 });
             } catch (error) {
@@ -30,10 +33,20 @@ async function eclipse_setup(page: Page) {
 export default eclipse_setup;
 
 function getEquoChromiumPageAndOpenWorkflow(pages: Page[]) {
-    const page1 = pages.find(page => page.url().includes('diagram'));
-    const url = page1?.url();
-    const updatedUrl = url?.replace(/path=[^&]+/, `path=${encodedNewPath}`);
-    page1?.goto(updatedUrl ? updatedUrl : '');
+    const page1 = pages.find(page => page.url().includes("diagram"));
+    if (!page1) {
+        console.error("No page found with 'diagram' in the URL.");
+        return;
+    }
+    const url = page1.url();
+    let updatedUrl;
+    if (url.includes("path=")) {
+        updatedUrl = url.replace(/path=[^&]*/, `path=${encodedNewPath}`);
+    } else {
+        const separator = url.includes("?") ? "&" : "?";
+        updatedUrl = `${url}${separator}path=${encodedNewPath}`;
+    }
+    page1.goto(updatedUrl);
     return page1;
 }
 

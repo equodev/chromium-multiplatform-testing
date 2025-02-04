@@ -5,6 +5,7 @@ Before setting up the project, ensure you have the following dependencies instal
 ### **Required Software**
 
 - **Java 17** – Ensure `java -version` returns Java 17.
+- **Maven 3.9** - Ensure `mvn -version` returns Maven 3.9.9.
 - **Node.js 20.17.0** – Check with `node -v`.
 - **Git** – Required for submodule management (`git submodule update --init`).
 - **Visual Studio Code (Latest Version)** – Required for running `code serve-web` and tests.
@@ -30,7 +31,7 @@ If you encounter any issues while setting up or running the project, please crea
 To set up the project, start by installing the necessary dependencies using the following command in the root folder:
 
 ```sh
-yarn install
+npm run setup
 ```
 
 ## Initializing GLSP Submodules
@@ -115,7 +116,6 @@ A script is provided to streamline the Eclipse setup process. In the parent `chr
 ```sh
 ./setup_glsp_integration.sh
 ```
-
 
 ### Add debugging port
 
