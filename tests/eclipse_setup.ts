@@ -10,7 +10,7 @@ const encodedNewPath = encodeURIComponent(workflowPath);
 async function eclipse_setup(page: Page) { 
     return new Promise<Page | undefined>((resolve, reject) => {
             try {
-                const result = exec("./setup_glsp_integration.sh");
+                const result = exec("bash ./setup_glsp_integration.sh");
                 result.stdout?.on('data', async (data) => {  
                     // Get token
                     if (data.includes('Launching Eclipse with workspace')) {
@@ -32,7 +32,7 @@ async function eclipse_setup(page: Page) {
 
 export default eclipse_setup;
 
-function getEquoChromiumPageAndOpenWorkflow(pages: Page[]) {
+async function getEquoChromiumPageAndOpenWorkflow(pages: Page[]) {
     const page1 = pages.find(page => page.url().includes("diagram"));
     if (!page1) {
         console.error("No page found with 'diagram' in the URL.");
@@ -46,7 +46,8 @@ function getEquoChromiumPageAndOpenWorkflow(pages: Page[]) {
         const separator = url.includes("?") ? "&" : "?";
         updatedUrl = `${url}${separator}path=${encodedNewPath}`;
     }
-    page1.goto(updatedUrl);
+    await page1.goto(updatedUrl);
+    await page1.waitForTimeout(50)
     return page1;
 }
 

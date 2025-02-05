@@ -44,7 +44,7 @@ export async function terminateProcessOnPort(ide: string | undefined) {
         command = `taskkill /IM eclipse.exe /F`;  // Force kill eclipse.exe
       } else if (platform === 'darwin') {
         // macOS: Use killall to close Eclipse by name
-        command = `killall eclipse`;
+        command = `killall -9 eclipse`;
       } else {
         // Linux: Use killall to close Eclipse by name
         command = `killall eclipse`;
