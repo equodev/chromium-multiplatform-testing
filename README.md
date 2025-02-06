@@ -61,21 +61,15 @@ yarn install
 
 2. Open the [vscode_setup.ts](./tests/vscode_setup.ts) file and update the vscode binary location (specified in the results variable) to point to your local VS Code binary file and modify the vscode binary location (results var) to point to your local vscode binary.
 
-3. In a terminal, start the VS Code web server by running:
+3. In a terminal, start the VS Code web server for a first time for it to download the latest version by running:
 
 ```sh
 code serve-web
 ```
 
-This command launches a local web server that serves the web interface of your VS Code, allowing you to access VS Code through a web browser and enabling the tests to interact directly with it. During the VS Code test runs, the required GLSP extension will be installed to render the graphics.
-
-<b><u>Sidenote</b></u>: [GLSP extension](https://marketplace.visualstudio.com/items?itemName=Eclipse-GLSP.workflow-web-extension-demo) is installed during the tests to render the graphics:
-
-4. Import the glsp-vscode-integration folder as needed.
-
-After completing these steps, you should be able to run the example tests.
-
 > To verify the installation was successful, open the `example1.wf` file within the example/workspace folder.
+
+This command launches a local web server that serves the web interface of your VS Code, allowing you to access VS Code through a web browser and enabling the tests to interact directly with it. After the latest version is downloaded close this process.
 
 ## Eclipse Theia GLSP Integration setup
 
@@ -105,37 +99,12 @@ yarn browser start
 
 
 ## Eclipse GLSP Integration setup
-First, to run eclipse tests a modification in playwright is necessary for it to enable cef connection:
-
-```sh
-./enable_cef_connection.sh
-```
-
 A script is provided to streamline the Eclipse setup process. In the parent `chromium-multiplatform-testing` folder, execute the following command in a bash terminal to install all dependencies:
 
 ```sh
 ./setup_glsp_integration.sh
 ```
 
-### Add debugging port
+### Microsoft Defender Warning
 
-To add a debugging port in Eclipse, follow these steps:
-
-1. Navigate to Run > Run Configuration > Arguments > VM Arguments.
-2. Add the following line to the VM arguments:
-
-```sh
--Dchromium_remote_debugging_port=8888
-```
-
-### Windows Defender Warning
-
-When launching the generated Eclipse application for the first time on Windows, Windows Defender may flag it as a potential threat or block its execution. This is a false positive, and you can safely allow the application to run.
-
-#### How to Resolve:
-
-1. If Windows Defender prompts a security warning, click **More info**.
-2. Then, click **Run anyway** to proceed.
-3. If necessary, add the Eclipse executable to the list of allowed applications in Windows Security.
-
-This issue typically occurs because the executable is not yet recognized by Microsoft's security databases, but it does not pose any actual risk.
+When launching the generated Eclipse application on Windows you may encounter a dialog about Microsoft Defender which you can either ignore or give access to make it disappear.

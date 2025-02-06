@@ -14,6 +14,7 @@ async function eclipse_setup(page: Page) {
                 result.stdout?.on('data', async (data) => {  
                     // Get token
                     if (data.includes('Launching Eclipse with workspace')) {
+                        console.log("On Windows Eclipse requires aprox. 15 seconds to start. Please wait...");
                         await page.waitForTimeout(15000);
                         const pages = await connectToEquoChromiumWithinEclipse();
                         const workflowPage = getEquoChromiumPageAndOpenWorkflow(pages);
@@ -21,7 +22,6 @@ async function eclipse_setup(page: Page) {
                     }
                 });
                 result.stderr?.on('data', (data) => {
-                    console.log(data);
                     // Handle stderr data if needed
                 });
             } catch (error) {

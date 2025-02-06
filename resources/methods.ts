@@ -53,7 +53,7 @@ export async function terminateProcessOnPort(ide: string | undefined) {
       execSync(command, { stdio: 'ignore' });
       console.log('Eclipse process terminated.');
     } catch (error) {
-      console.error('Failed to terminate Eclipse process.');
+      // Handle error if the Eclipse process could not be terminated
     }
   }
 }
