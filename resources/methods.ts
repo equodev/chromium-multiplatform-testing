@@ -33,7 +33,7 @@ export async function terminateProcessOnPort(ide: string | undefined) {
       execSync(command, { stdio: 'ignore' });
       console.log(`Process on port ${port} terminated.`);
     } catch (error) {
-      console.error(`Failed to kill process on port ${port ?? 'unknown'}:`);
+      // Handle error if the process could not be terminated
     }
   }
   if (ide === 'eclipse') {
@@ -47,7 +47,7 @@ export async function terminateProcessOnPort(ide: string | undefined) {
         command = `killall -9 eclipse`;
       } else {
         // Linux: Use killall to close Eclipse by name
-        command = `killall eclipse`;
+        command = `pkill -9 -f eclipse`;
       }
       // Execute the command to terminate the Eclipse process
       execSync(command, { stdio: 'ignore' });
