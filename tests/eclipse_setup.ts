@@ -1,6 +1,5 @@
 import { Page, chromium, Browser } from '@playwright/test';
 import { exec } from 'child_process';
-import { log } from 'console';
 import * as path from "path"; 
 
 let workflowPath = path.resolve(__dirname, "../resources/test-workflow/example1.wf");
@@ -12,7 +11,6 @@ async function eclipse_setup(page: Page) {
             try {
                 const result = exec("bash ./setup_glsp_integration.sh");
                 result.stdout?.on('data', async (data) => {  
-                    // Get token
                     if (data.includes('Launching Eclipse with workspace')) {
                         console.log("On Windows Eclipse requires aprox. 15 seconds to start. Please wait...");
                         await page.waitForTimeout(15000);
