@@ -1,112 +1,26 @@
-import { test, expect, Keyboard, Page } from '@playwright/test';
-import { ide_setup } from './ide_setup';
-import { execSync } from 'child_process';
-import { platform } from 'os';
+import { test} from '@playwright/test';
+import { setup_ide } from './ide_setup';
+import { replaceNodeText, assertTextHasBeenReplaced, terminateProcessOnPort } from '../resources/methods';
 
-const isMac = () => platform() === 'darwin';
-const ide = process.env.IDE?.toLowerCase() ?? 'vscode';
-
-test.beforeEach(async () => {
-  try {
-    // Run the kill command to terminate the server process
-    switch (ide) {
-      case "vscode":
-        execSync('kill -9 $(lsof -t -i:8000)', { stdio: 'ignore' });
-        console.log('Process on port 8000 terminated.');
-        break;
-        case "theia":
-          execSync('kill -9 $(lsof -t -i:3000)', { stdio: 'ignore' });
-          console.log('Process on port 3000 terminated.');
-          break;
-      default:
-        break;
-    }    
-  } catch (error) {
-    console.error('Failed to kill process on port 3000:', error);
-  }
+const ide = process.env.IDE?.toLowerCase() ?? 'eclipse';
+test.afterEach(async () => {
+  await terminateProcessOnPort(ide);
 });
 
-test('Test example', async ({ page }) => {
-  // IDE Setup
-  test.setTimeout(30000);
+test('Renaming node example with DOM manipulation', async ({ page }) => {
+  test.setTimeout(300000); // 30 seconds timeout
   console.log("Currently running the tests on", ide);
-  await ide_setup(ide, page);
+  let testPage: any = await setup_ide(ide, page);
 
-  // Match IDE
-  switch (ide) {
-    case "vscode": {
-      const debugPage = await switchTab(page);
-      const element = debugPage.frameLocator('iframe[class="webview ready"]')
-      .frameLocator('iframe[title="undefined"]')
-      .locator('#workflow-diagram_0')
-      .getByText('Push')
-      await element.click();
-      await debugPage.keyboard.press("Delete");
+// classForTestingPurposes is defined as a CSS class in test-workflow/example1.wf line 80
+  const nodeClass = 'g.node.task.manual.classForTestingPurposes'
 
-      // Assert element has been deleted
-      await expect(element).toBeHidden();
-      await debugPage.waitForTimeout(1000);
+  await replaceNodeText(testPage, nodeClass, "Hello");
+  await assertTextHasBeenReplaced(testPage, nodeClass, "Hello");
+  await replaceNodeText(testPage, nodeClass, "Push");
+  await assertTextHasBeenReplaced(testPage, nodeClass, "Push");
 
-      // Assert element is present again
-      if (isMac()) {
-        await debugPage.keyboard.press('Meta+Z');
-      } else {
-        await debugPage.keyboard.press('Control+Z');
-      }
-      await expect(element).toBeVisible();
-
-      // Teardown
-      await page.close();
-      await debugPage.close();
-
-      break;
-    }
-    case "theia": {
-      await page.waitForSelector('g#workflow-diagram_0_task_Push');
-      const pushbtn = page.locator(`[id=workflow-diagram_0_task_Push][data-svg-metadata-parent-id]`);
-      await pushbtn.click();
-      await page.keyboard.down("Delete");
-      await expect(pushbtn).toBeHidden();
-      await page.waitForTimeout(2000);
-
-      if (isMac()) {
-        await page.keyboard.press('Meta+Z');
-      } else {
-        await page.keyboard.press('Control+Z');
-      }
-      await expect(pushbtn).toBeVisible();
-      await page.waitForTimeout(4000);
-      // await page.close();
-
-      break;
-    }
-    case "eclipse": {
-      await page.waitForSelector('g#workflow-diagram_0_task_Push');
-      const pushbtn = page.locator(`[id=workflow-diagram_0_task_Push][data-svg-metadata-parent-id]`);
-      await pushbtn.click();
-      await page.keyboard.down("Delete");
-      await page.waitForTimeout(2000);
-
-      if (isMac()) {
-        await page.keyboard.press('Meta+Z');
-      } else {
-        await page.keyboard.press('Control+Z');
-      }
-
-      await page.waitForTimeout(2000);
-      await page.close();
-      break;
-    }
-    default: {
-      console.log("Please input desired IDE");
-      break;
-    }
-  }
+  await page.close();
 });
 
-async function switchTab(page: Page) {
-  const pages = page.context().pages();
-  const debugPage = pages[1];
-  await debugPage.bringToFront();
-  return debugPage;
-}
+

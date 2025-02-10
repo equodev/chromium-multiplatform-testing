@@ -1,9 +1,37 @@
+## Prerequisites
+
+Before setting up the project, ensure you have the following dependencies installed:
+
+### **Required Software**
+
+- **Java 17** – Ensure `java -version` returns Java 17.
+- **Maven 3.9** - Ensure `mvn -version` returns Maven 3.9.9.
+- **Node.js 20.17.0** – Check with `node -v`.
+- **Git** – Required for submodule management (`git submodule update --init`).
+- **Visual Studio Code (Latest Version)** – Required for running `code serve-web` and tests.
+- **GLSP Extension for VSCode** – Installed automatically during tests ([Marketplace](https://marketplace.visualstudio.com/items?itemName=Eclipse-GLSP.workflow-web-extension-demo)).
+- **Bash** – Required to run .sh scripts (use WSL or Git Bash on Windows).
+- **Playwright** (for Eclipse GLSP Integration tests) – Included in `devDependencies` but can be installed manually if needed.
+
+### **Verify Installation**
+
+```sh
+node -v      # Should return v20.17.0
+java -version # Should return Java 17
+git --version # Ensure Git is available
+code -v      # Check VSCode installation
+```
+
+### **Reporting Issues**
+
+If you encounter any issues while setting up or running the project, please create an issue in our repository so we can review and address it. You can submit an issue [here](https://github.com/equodev/chromium-multiplatform-testing/issues).
+
 # Project Setup
 
 To set up the project, start by installing the necessary dependencies using the following command in the root folder:
 
 ```sh
-yarn install
+npm run setup
 ```
 
 ## Initializing GLSP Submodules
@@ -33,21 +61,15 @@ yarn install
 
 2. Open the [vscode_setup.ts](./tests/vscode_setup.ts) file and update the vscode binary location (specified in the results variable) to point to your local VS Code binary file and modify the vscode binary location (results var) to point to your local vscode binary.
 
-3. In a terminal, start the VS Code web server by running:
+3. In a terminal, start the VS Code web server for a first time for it to download the latest version by running:
 
 ```sh
 code serve-web
 ```
 
-This command launches a local web server that serves the web interface of your VS Code, allowing you to access VS Code through a web browser and enabling the tests to interact directly with it. During the VS Code test runs, the required GLSP extension will be installed to render the graphics.
-
-<b><u>Sidenote</b></u>: [GLSP extension](https://marketplace.visualstudio.com/items?itemName=Eclipse-GLSP.workflow-web-extension-demo) is installed during the tests to render the graphics:
-
-4. Import the glsp-vscode-integration folder as needed.
-
-After completing these steps, you should be able to run the example tests.
-
 > To verify the installation was successful, open the `example1.wf` file within the example/workspace folder.
+
+This command launches a local web server that serves the web interface of your VS Code, allowing you to access VS Code through a web browser and enabling the tests to interact directly with it. After the latest version is downloaded close this process.
 
 ## Eclipse Theia GLSP Integration setup
 
@@ -56,10 +78,16 @@ After completing these steps, you should be able to run the example tests.
 1. Open the glsp-theia-integration submodule folder and install its dependencies by running:
 
 ```sh
-yarn browser install
+yarn install
 ```
 
-2. Start the application by running:
+2. To build the browser application execute:
+
+```sh
+yarn browser build
+```
+
+3. Start the application by running:
 
 ```sh
 yarn browser start
@@ -77,24 +105,6 @@ A script is provided to streamline the Eclipse setup process. In the parent `chr
 ./setup_glsp_integration.sh
 ```
 
-### Quick note
+### Microsoft Defender Warning
 
-If you are having trouble running the Eclipse app using MacOS or a Unix based system, try the following command to enable extended attributes in case the app seems to be damaged.
-
-```sh
-xattr -cr /path/to/Eclipse.app
-```
-
-### Add debugging port
-
-To add a debugging port in Eclipse, follow these steps:
-
-1. Navigate to Run > Run Configuration > Arguments > VM Arguments.
-2. Add the following line to the VM arguments:
-
-```sh
--Dchromium_remote_debugging_port=8888
-```
-
-
-
+When launching the generated Eclipse application on Windows you may encounter a dialog about Microsoft Defender which you can either ignore or give access to make it disappear.

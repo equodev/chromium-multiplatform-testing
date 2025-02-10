@@ -3,3 +3,6 @@ node_modules/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+/resources/workspace/.lock
+/resources/workspace/.log
+/resources/workspace/.plugins/org.eclipse.e4.workbench/workbench.xmi
